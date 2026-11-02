@@ -1,0 +1,36 @@
+Policy Title: Aetna Member Eligibility and Coverage Resolution Guide
+Payer: Aetna
+Document Type: Prototype payer operations manual
+Version: 2026.1
+
+This guide is synthetic training content for the MainStreet prototype. Billing staff must verify the member's plan, current payer contract, and controlling published policy before transmitting a claim.
+
+## Section 1 — Subscriber and Member Identifier Validation
+
+Eligibility inquiries and claims must use the member identifier exactly as shown on the current identification card or electronic eligibility response. Preserve required alpha prefixes, leading zeroes, numeric characters, and dependent suffixes. Do not insert spaces or punctuation unless the payer transaction specification requires them.
+
+Confirm that patient name, date of birth, subscriber relationship, group number, and member identifier refer to the same enrollment record. When a portal rejects an identifier, request the current card and run an electronic eligibility inquiry rather than guessing a suffix or reusing an expired identifier. Corrected demographic or identifier data must be updated consistently in registration and on the claim.
+
+## Section 2 — Effective Dates and Coverage Termination Denials
+
+For a coverage-termination denial such as CO-27, verify eligibility for the exact date of service rather than the billing or submission date. Record the response date, effective date, termination date, plan name, product, and reference or trace number. A present-day active status does not by itself prove coverage on an earlier service date.
+
+If the eligibility response shows active coverage on the service date, submit a reconsideration with the dated response, identification card when relevant, and payer trace number. If coverage ended before the service date, determine whether another payer was active, the patient is responsible under applicable notice rules, or retroactive reinstatement is pending. Do not repeatedly rebill a terminated plan without new eligibility evidence.
+
+## Section 3 — Coordination of Benefits
+
+Coordination of benefits must identify the correct primary and secondary payer for the service date. Ask the member about employer coverage, spouse or parent coverage, Medicare, Medicaid, accident coverage, and recent changes. Validate the order of benefits rather than relying only on the order stored in the practice system.
+
+When Aetna is secondary, submit the primary payer's adjudication information and required remittance details. When an outdated coordination-of-benefits record causes a denial, instruct the member to update the record with the payer and retain the payer confirmation number. Rebill only after the payer confirms the coordination record or include proof with an appeal when permitted.
+
+## Section 4 — Coverage Corrections and Appeals
+
+Use a corrected claim when the subscriber identifier, relationship code, group number, or payer sequence was submitted incorrectly. Use an eligibility appeal or reconsideration when the original claim data was correct and dated evidence shows active coverage. The submission must reference the denied claim and include only the minimum necessary enrollment evidence.
+
+Document each verification attempt, portal or call reference number, representative name when provided, and the outcome. Protect member information in accordance with organizational privacy and access controls. Escalate conflicting eligibility responses for manual payer review before assigning patient responsibility.
+
+## Section 5 — Prior Authorization Number Submission
+
+When a valid authorization is already documented and matches the billed CPT code, provider, facility, and date of service, transmit that exact authorization number in the claim's prior-authorization field. For CMS-1500 professional claims, use Field 23. An authorization omission is corrected by adding the documented number and submitting a corrected claim; it does not require a generic appeal.
+
+When the chart contains no authorization number, staff must verify whether authorization was required on the service date. Seek retroactive authorization only when allowed by the member's plan and supported by the clinical record. Never fabricate an authorization number or use a number issued for a different service.

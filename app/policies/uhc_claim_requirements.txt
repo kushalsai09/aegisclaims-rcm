@@ -1,0 +1,18 @@
+Policy Title: UnitedHealthcare Professional Claim Requirements Guide
+Payer: UnitedHealthcare
+Document Type: Prototype payer operations manual
+Version: 2026.1
+
+This synthetic manual supports the MainStreet prototype. Verify the member plan and current UnitedHealthcare policy before transmitting a claim.
+
+## Section 1 — Authorization and Field 23
+
+When prior authorization is required, the submitted authorization must match the member, rendering provider, service location, procedure, and service date. Transmit the documented authorization number in CMS-1500 Field 23. A claim denied because an existing authorization was omitted should be corrected with the exact authorization value; never substitute a number issued for another service.
+
+## Section 2 — Same-Day E/M and Bundling
+
+Modifier -25 may be reported on an E/M service only when the record demonstrates significant, separately identifiable work beyond the associated procedure. If distinct work is supported and the modifier was omitted, append Modifier -25 to the E/M line. If the work is integral to the procedure, remove the separately billed component from the corrected claim.
+
+## Section 3 — Coverage Termination and Eligibility
+
+For a coverage termination denial, verify eligibility for the exact date of service and retain the response reference. When coverage terminated before that date, route the claim to the verified active payer and do not repeatedly rebill UnitedHealthcare. When dated evidence demonstrates active coverage, submit an eligibility reconsideration with the trace number.

@@ -1,0 +1,18 @@
+Policy Title: Cigna Professional Claim Editing and Authorization Guide
+Payer: Cigna
+Document Type: Prototype payer operations manual
+Version: 2026.1
+
+This synthetic manual supports the MainStreet prototype. Verify current member benefits and controlling payer policy before submission.
+
+## Section 1 — Bundling and Modifier -25
+
+Cigna applies professional claim edits to services performed during the same encounter. Modifier -25 belongs on the eligible E/M line only when the medical record supports a significant, separately identifiable E/M service beyond the usual work of the procedure. When the documentation supports separate E/M work and Modifier -25 was omitted, append Modifier -25 to the E/M code and submit a corrected claim. Remove an unsupported component service instead of adding a modifier solely to bypass an edit.
+
+## Section 2 — Prior Authorization Submission
+
+The authorization number must match the member, servicing provider, facility, CPT code, and date of service. For CMS-1500 professional claims, enter a valid documented authorization number in Field 23. If the number was obtained but omitted, add the exact charted value and submit a corrected claim. When no authorization exists, request retroactive review only when the plan permits it.
+
+## Section 3 — Eligibility and Coverage Dates
+
+For CO-27, validate coverage on the exact service date. If coverage ended before the encounter, stop rebilling the terminated plan and identify the active payer or applicable patient responsibility. If dated eligibility evidence shows active Cigna coverage, submit reconsideration with the response reference number.

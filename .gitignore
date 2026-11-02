@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+claims.db
+claims.db-shm
+claims.db-wal
+chroma_db/
+output/
+recordings/
+*.ses

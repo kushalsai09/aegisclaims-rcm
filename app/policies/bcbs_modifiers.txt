@@ -1,0 +1,40 @@
+Policy Title: BCBS Professional Claim Modifiers and Bundling Operations Guide
+Payer: BCBS
+Document Type: Prototype payer operations manual
+Version: 2026.1
+
+This guide is synthetic training content for the MainStreet prototype. Billing staff must verify the member's plan, current payer contract, and controlling published policy before transmitting a claim.
+
+## Section 1 — Significant, Separately Identifiable E/M Service (Modifier -25)
+
+Modifier -25 may be appended to an evaluation and management (E/M) service when the patient's condition requires a significant, separately identifiable E/M service above and beyond the usual pre-service and post-service work associated with another procedure performed by the same clinician on the same date. The decision to perform a minor procedure alone does not support Modifier -25.
+
+The medical record must independently describe the history, examination, medical decision-making, assessment, and plan supporting the separate E/M work. A different diagnosis is not required, but diagnosis coding should accurately represent the conditions evaluated. The E/M note must not merely repeat work inherent to the procedure.
+
+For a corrected claim, append Modifier -25 to the eligible E/M line—not the procedure line—only after the documentation review confirms these requirements. Include the encounter note when requested. If the record does not support distinct work, correct the claim by removing the unsupported separately billed E/M service.
+
+## Section 2 — Unbundling and National Correct Coding Edits
+
+BCBS processes professional claims using applicable code-pair and bundling edits. A component service is not separately payable when its work is integral to a more comprehensive service reported for the same patient and encounter. Billing component codes solely to increase reimbursement is prohibited.
+
+Before responding to an unbundling denial such as CO-104, compare every same-day line, identify the comprehensive and component services, and review the current edit for the date of service. A modifier must never be added solely to bypass an edit. When a distinct-service exception is allowed, the record must demonstrate a separate encounter, anatomical site, lesion, session, or other policy-supported circumstance.
+
+Submit a corrected claim when a code was duplicated, a component was billed separately, or the modifier was placed on the wrong line. Appeal an edit only when the original coding is correct and the submitted note clearly demonstrates the policy-supported distinct service. The appeal should identify the disputed code pair and point to the exact documentation establishing separateness.
+
+## Section 3 — Drug Waste and Modifier -JW
+
+Modifier -JW reports the amount of a single-dose drug or biological that was discarded and not administered to any patient. Report the administered amount and discarded amount on separate claim lines using the same HCPCS code. Append Modifier -JW only to the discarded-amount line and calculate units from the code descriptor.
+
+The record must identify the drug name, vial size, amount administered, amount discarded, date and time, and the reason the remainder could not be used. Modifier -JW is not appropriate for multi-dose containers, packaging with no discarded amount, or waste caused by inventory practices. Use Modifier -JZ on the administered line when the controlling payer rule requires attestation that no amount was discarded.
+
+## Section 4 — Submission Controls and Documentation
+
+Prior to resubmission, confirm member eligibility, rendering and billing provider identifiers, place of service, diagnosis linkage, code units, and modifier order. Preserve the original remittance, corrected-claim indicator, payer claim number, and all supporting clinical documentation in the audit record.
+
+Staff should distinguish a corrected claim from an appeal. Use a corrected claim to change submitted data. Use an appeal when the data was correct but payment application or policy interpretation is disputed. Never alter clinical documentation after the fact except through a dated, authenticated addendum that follows organizational policy.
+
+## Section 5 — Prior Authorization Claim Placement
+
+When a required prior authorization was obtained and is documented in the chart, the authorization number must be transmitted in the applicable claim authorization field. For a CMS-1500 professional claim, place the authorization or referral number in Field 23 and ensure it matches the authorized CPT code, provider, facility, and date of service. If the number was omitted from the original claim, submit a corrected claim with the exact documented authorization number.
+
+If no authorization exists, do not invent or reuse a number from another service. Request retroactive authorization only when the member plan and documented clinical circumstances permit it; otherwise route the denial for contractual or medical-necessity review.

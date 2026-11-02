@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BCBS Provider Portal | Denied Claims</title>
+  <style>
+    :root { font-family: Inter, system-ui, sans-serif; color: #17233c; background: #f3f6fa; }
+    body { margin: 0; } header { padding: 24px 6%; background: #07599c; color: white; }
+    header h1 { margin: 0; font-size: 1.45rem; } header p { margin: 6px 0 0; opacity: .82; }
+    main { max-width: 1180px; margin: 38px auto; padding: 0 24px; }
+    section { overflow: hidden; background: white; border-radius: 12px; box-shadow: 0 8px 28px #19345418; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid #e6ebf2; }
+    h2 { margin: 0; font-size: 1.1rem; } input { width: 280px; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; }
+    .table-wrap { overflow-x: auto; } table { width: 100%; border-collapse: collapse; min-width: 1050px; }
+    th, td { padding: 14px 15px; text-align: left; border-bottom: 1px solid #edf0f5; font-size: .88rem; }
+    th { background: #f8fafc; color: #52627a; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+    .code { color: #a12828; font-weight: 700; } .pagination { display: flex; align-items: center; justify-content: flex-end; gap: 10px; padding: 14px 20px; }
+    button { border: 1px solid #cbd5e1; border-radius: 7px; background: white; padding: 7px 11px; cursor: pointer; } button:disabled { opacity: .4; cursor: default; }
+  </style>
+</head>
+<body>
+  <header><h1>Blue Cross Blue Shield Provider Portal</h1><p>Claims Management / Denied Claims</p></header>
+  <main>
+    <section>
+      <div class="toolbar"><div><h2>Denied claims requiring action</h2><small id="result-count">2 claims</small></div><label><span hidden>Search claims</span><input id="claim-search" type="search" placeholder="Search patient, claim, or denial"></label></div>
+      <div class="table-wrap">
+        <table id="denied-claims">
+          <thead><tr><th>Claim ID</th><th>Patient</th><th>Insurer</th><th>Date of Service</th><th>CPT</th><th>Denial Code</th><th>Amount</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr data-auth-number="" data-modifier="" data-diagnosis-code="R05.9" data-eob-notes="Encounter note supports a significant, separately identifiable E/M service."><td>BCBS-24001</td><td>John Doe</td><td>Blue Cross Blue Shield</td><td>2026-08-18</td><td>99214</td><td class="code">CO-104</td><td>$285.00</td><td>Service unbundled</td></tr>
+            <tr data-auth-number="PA-24002" data-modifier="" data-diagnosis-code="J02.9" data-eob-notes="Authorization PA-24002 is documented in the chart and matches CPT 87880."><td>BCBS-24002</td><td>Jane Smith</td><td>Blue Cross Blue Shield</td><td>2026-08-22</td><td>87880</td><td class="code">CO-197</td><td>$164.75</td><td>Precertification or authorization absent</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination"><button id="previous" type="button">Previous</button><span id="page-label">Page 1 of 2</span><button id="next" type="button">Next</button></div>
+    </section>
+  </main>
+  <script>
+    const allRows = [...document.querySelectorAll('#denied-claims tbody tr')];
+    const pageSize = 1; let page = 1; let visibleRows = allRows;
+    function render() {
+      const pages = Math.max(1, Math.ceil(visibleRows.length / pageSize)); page = Math.min(page, pages);
+      allRows.forEach(row => row.hidden = true); visibleRows.slice((page - 1) * pageSize, page * pageSize).forEach(row => row.hidden = false);
+      document.querySelector('#page-label').textContent = `Page ${page} of ${pages}`;
+      document.querySelector('#result-count').textContent = `${visibleRows.length} claim${visibleRows.length === 1 ? '' : 's'}`;
+      document.querySelector('#previous').disabled = page === 1; document.querySelector('#next').disabled = page === pages;
+    }
+    document.querySelector('#claim-search').addEventListener('input', event => { const term = event.target.value.toLowerCase(); visibleRows = allRows.filter(row => row.textContent.toLowerCase().includes(term)); page = 1; render(); });
+    document.querySelector('#previous').addEventListener('click', () => { page--; render(); });
+    document.querySelector('#next').addEventListener('click', () => { page++; render(); }); render();
+  </script>
+</body>
+</html>

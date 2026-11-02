@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" class="h-full bg-zinc-950">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MainStreet Family Care enterprise revenue cycle command center">
+  <title>MainStreet RCM Enterprise</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{ink:'#070a0f',panel:'#10151d',cyan:'#22d3ee'},fontFamily:{sans:['Inter','ui-sans-serif','system-ui','sans-serif']}}}};</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/custom.css') }}">
+  <script defer src="{{ url_for('static', path='/js/charts.js') }}"></script>
+  <script defer src="{{ url_for('static', path='/js/dashboard.js') }}"></script>
+</head>
+<body class="min-h-full bg-ink font-sans text-zinc-100 antialiased">
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <aside class="app-sidebar" aria-label="Primary navigation">
+    <div class="sidebar-brand"><div class="brand-mark">M</div><div><p class="text-sm font-black text-white">MainStreet RCM</p><p class="mt-0.5 text-[9px] font-black tracking-[.18em] text-cyan-400">ENTERPRISE</p></div></div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-workspace="claims" type="button"><span>🎯</span><span>Claims Queue</span></button>
+      <button class="nav-item" data-workspace="analytics" type="button"><span>📊</span><span>Executive Analytics</span></button>
+      <button class="nav-item" data-workspace="rag" type="button"><span>🤖</span><span>Policy RAG Engine</span></button>
+      <button class="nav-item" data-workspace="integrations" type="button"><span>🔌</span><span>Integration Hub</span></button>
+      <button class="nav-item" data-workspace="audit" type="button"><span>📜</span><span>Audit Logs</span></button>
+    </nav>
+    <div class="sidebar-foot"><div class="system-health"><i></i><div><p>Platform operational</p><span>Prototype environment</span></div></div><div class="user-chip"><span>KS</span><div><p>Billing Operations</p><small>MainStreet Family Care</small></div></div></div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div><p class="eyebrow text-cyan-400">RCM CONTROL PLANE</p><h1 id="workspace-title" class="mt-1 text-xl font-black text-white">Claims Queue</h1></div>
+      <div class="flex flex-wrap items-center gap-2.5"><div class="mr-2 flex items-center gap-2 text-[11px] font-bold text-zinc-500"><span id="connection-dot" class="h-2 w-2 rounded-full bg-amber-400"></span><span id="connection-label">Connecting</span></div><button id="analyze-all-button" class="button-secondary" type="button">Analyze pending</button><button id="scraper-button" class="button-primary" type="button">↻ Sync portals</button></div>
+    </header>
+
+    <main class="workspace-main">
+      <section id="workspace-claims" class="workspace-view active" data-view="claims" aria-label="Claims Queue">
+        <div class="workspace-heading"><div><p class="eyebrow text-cyan-400">OPERATIONS</p><h2>Denied Claims Command Queue</h2><p>Prioritize, inspect, and resolve payer denials from one control plane.</p></div><div class="compact-stat"><span id="queue-risk">$0.00</span><small>ACTIVE EXPOSURE</small></div></div>
+        <div class="queue-shell grid min-h-[690px] xl:grid-cols-[minmax(650px,1.08fr)_minmax(470px,.92fr)]">
+          <div class="min-w-0 border-b border-white/10 xl:border-b-0 xl:border-r">
+            <div id="bulk-action-bar" hidden class="bulk-bar"><div><strong id="bulk-selected-count">0 claims selected</strong><span>Eligible claims will be analyzed together</span></div><div class="flex gap-2"><button id="clear-selection-button" class="button-ghost" type="button">Clear</button><button id="bulk-analyze-button" class="button-primary" type="button">⚡ Bulk AI Batch Analysis</button></div></div>
+            <div class="queue-toolbar"><div><h3>Work queue</h3><p id="claims-summary">Loading claims…</p></div><div class="filter-cluster" role="group" aria-label="Filter claims by status"><button data-status="ALL" class="filter-button active">All</button><button data-status="PENDING" class="filter-button">Pending</button><button data-status="ANALYZED" class="filter-button">Analyzed</button><button data-status="RESOLVED" class="filter-button">Resolved</button></div></div>
+            <div class="scrollbar-subtle overflow-auto xl:max-h-[610px]"><table class="enterprise-table min-w-[800px]"><thead><tr><th class="w-10"><input id="select-all-checkbox" class="claim-checkbox" type="checkbox" aria-label="Select all eligible visible claims"></th><th>Patient / Claim</th><th>Payer</th><th>Denial</th><th class="text-right">Exposure</th><th>State</th></tr></thead><tbody id="claims-table-body"></tbody></table><div id="claims-empty" hidden class="empty-state"><strong>No claims in this view</strong><span>Select another operational state.</span></div></div>
+          </div>
+
+          <aside class="min-w-0 bg-black/10" aria-label="Claim intelligence workspace">
+            <div id="detail-empty" class="empty-state min-h-[690px]"><div class="empty-orb">⌁</div><strong>Select a claim</strong><span>Inspect evidence and generate a policy-grounded correction.</span></div>
+            <div id="detail-panel" hidden class="flex min-h-[690px] flex-col">
+              <div class="detail-head"><div><p id="detail-claim-id" class="font-mono text-[10px] font-bold uppercase tracking-[.15em] text-cyan-400"></p><h2 id="detail-patient"></h2><p id="detail-insurer"></p></div><span id="detail-status"></span></div>
+              <div class="detail-tabs" role="tablist"><button id="resolution-tab" class="detail-tab active" type="button" role="tab" aria-selected="true">Resolution</button><button id="audit-tab" class="detail-tab" type="button" role="tab" aria-selected="false">Audit signal</button></div>
+              <div id="resolution-tab-panel" class="detail-scroll" role="tabpanel">
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-4"><div class="data-tile"><span>CPT</span><strong id="detail-cpt"></strong></div><div class="data-tile"><span>Exposure</span><strong id="detail-amount"></strong></div><div class="data-tile"><span>Service date</span><strong id="detail-service-date"></strong></div><div class="data-tile"><span>Root code</span><strong id="detail-denial-code" class="text-rose-300"></strong></div></div>
+                <section><div class="mb-3 flex justify-between"><h3 class="section-label">Claim evidence grid</h3><span class="micro-label">EHR + EOB</span></div><div class="evidence-grid"><div class="evidence-cell"><span>EHR chart auth #</span><strong id="evidence-auth"></strong></div><div class="evidence-cell"><span>Diagnosis code</span><strong id="evidence-diagnosis"></strong></div><div class="evidence-cell"><span>Modifier status</span><strong id="evidence-modifier"></strong></div><div class="evidence-cell"><span>EOB code</span><strong id="evidence-eob"></strong></div></div><p id="evidence-note" class="evidence-note"></p></section>
+                <section id="ai-empty" class="ai-empty"><span class="ai-glyph">✦</span><div><p>Policy analysis ready</p><span>Run the agent to isolate one root cause and one correction.</span></div></section>
+                <section id="ai-result" hidden class="ai-resolution"><div class="flex flex-wrap items-center justify-between gap-3"><div class="flex items-center gap-2"><span class="ai-glyph small">✦</span><h3 class="section-label text-cyan-300">AI root-cause resolution</h3></div><span id="confidence-badge" class="confidence-badge">— Policy Match</span></div><p id="detail-fix" class="mt-4 text-sm font-semibold leading-6 text-zinc-100"></p><button id="policy-citation-button" type="button" class="policy-trigger mt-4">📖 View Payer Policy <span>→</span></button></section>
+              </div>
+              <div id="audit-tab-panel" hidden class="detail-scroll" role="tabpanel"><div id="audit-loading" class="py-14 text-center text-sm text-zinc-600">Loading lifecycle signal…</div><div id="audit-empty" hidden class="empty-state"><strong>No lifecycle events</strong></div><ol id="audit-timeline"></ol></div>
+              <div id="dynamic-action-bar" class="action-dock"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="workspace-analytics" hidden class="workspace-view" data-view="analytics" aria-label="Executive Analytics">
+        <div class="workspace-heading"><div><p class="eyebrow text-violet-300">FINANCIAL INTELLIGENCE</p><h2>Executive Analytics</h2><p>Portfolio recovery, denial concentration, and first-pass performance.</p></div><p id="analytics-updated" class="micro-label">Synchronizing metrics…</p></div>
+        <div class="analytics-grid grid w-full min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-4"><article class="kpi-card min-w-0"><span>First-pass resolution</span><strong id="kpi-first-pass">0%</strong><small>of all denied claims</small></article><article class="kpi-card min-w-0"><span>Automation coverage</span><strong id="kpi-automation">0%</strong><small>claims policy analyzed</small></article><article class="kpi-card min-w-0"><span>Recovered revenue</span><strong id="kpi-recovered">$0.00</strong><small id="kpi-recovery-subtitle">portfolio recovery</small></article><article class="kpi-card min-w-0"><span>Average claim value</span><strong id="kpi-average">$0.00</strong><small>denied balance average</small></article></div>
+        <div class="analytics-grid mt-4 grid w-full min-w-0 gap-4 xl:grid-cols-[minmax(0,.75fr)_minmax(0,1.25fr)]"><article class="panel-card analytics-chart-card w-full min-w-0 overflow-hidden"><div class="panel-title"><div><p class="eyebrow text-cyan-300">PAYER MIX</p><h3>Payer Denial Distribution</h3></div></div><div class="chart-stage"><canvas id="payer-denial-chart" aria-label="Payer denial distribution chart"></canvas></div></article><article class="panel-card analytics-chart-card w-full min-w-0 overflow-hidden"><div class="panel-title"><div><p class="eyebrow text-emerald-300">RECOVERY VELOCITY</p><h3>Revenue Recovery Trends</h3></div></div><div class="chart-stage"><canvas id="recovery-trend-chart" aria-label="Revenue recovery trends chart"></canvas></div></article></div>
+        <div class="analytics-grid mt-4 grid w-full min-w-0 gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,.75fr)]"><article class="panel-card analytics-chart-card w-full min-w-0 overflow-hidden"><div class="panel-title"><div><p class="eyebrow text-rose-300">DENIAL HEATMAP</p><h3>Payer × Root Cause</h3></div></div><div id="denial-heatmap" class="heatmap mt-6 w-full min-w-0"></div></article><article class="panel-card analytics-chart-card w-full min-w-0 overflow-hidden"><div class="panel-title"><div><p class="eyebrow text-violet-300">RECOVERY BY PAYER</p><h3>Financial Exposure</h3></div></div><div id="payer-breakdown" class="mt-6 w-full min-w-0 space-y-4 overflow-hidden"></div></article></div>
+      </section>
+
+      <section id="workspace-rag" hidden class="workspace-view" data-view="rag" aria-label="Policy RAG Engine">
+        <div class="workspace-heading"><div><p class="eyebrow text-cyan-300">KNOWLEDGE CONTROL</p><h2>Policy RAG Engine</h2><p>Inspect indexed payer manuals and test semantic retrieval directly.</p></div><div class="compact-stat"><span id="rag-index-count">0</span><small>INDEXED CHUNKS</small></div></div>
+        <article class="panel-card"><form id="rag-search-form" class="search-shell"><span>⌕</span><input id="rag-query" type="search" placeholder="Ask a policy question, e.g. Where does authorization number PA-48102 belong?" autocomplete="off"><select id="rag-payer" aria-label="Filter by payer"><option value="">All payers</option><option value="BCBS">BCBS</option><option value="Aetna">Aetna</option><option value="Cigna">Cigna</option><option value="UnitedHealthcare">UnitedHealthcare</option></select><button class="button-primary" type="submit">Search vectors</button></form><div class="mt-5 flex items-center justify-between"><p id="rag-result-summary" class="micro-label">Loading policy index…</p><span class="confidence-badge">INDEXED POLICY CHUNKS · CHROMA COSINE</span></div><div id="rag-results" class="rag-results-grid mt-4"></div></article>
+      </section>
+
+      <section id="workspace-integrations" hidden class="workspace-view" data-view="integrations" aria-label="Integration Hub">
+        <div class="workspace-heading"><div><p class="eyebrow text-emerald-300">CONNECTIVITY</p><h2>Integration Hub</h2><p>Monitor payer portals, automation schedules, and data-plane health.</p></div><button id="run-diagnostic-button" class="button-secondary" type="button">Run connectivity diagnostic</button></div>
+        <div id="integration-cards" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"></div>
+        <article class="panel-card mt-4 flex flex-col items-start justify-between gap-5 sm:flex-row sm:items-center"><div><p class="eyebrow text-emerald-300">OBSERVABILITY STREAM</p><h3 class="mt-1 text-base font-black text-white">Integration console ready</h3><p class="mt-2 text-[10px] text-zinc-600">Inspect live portal handshakes, scheduler events, and policy-index health.</p></div><button id="open-integration-console-button" class="button-primary" type="button">Open live console →</button></article>
+      </section>
+
+      <section id="workspace-audit" hidden class="workspace-view" data-view="audit" aria-label="Audit Logs">
+        <div class="workspace-heading"><div><p class="eyebrow text-amber-300">COMPLIANCE</p><h2>Enterprise Audit Logs</h2><p>Search every scrape, analysis, resolution, and export lifecycle event.</p></div><div class="compact-stat"><span id="audit-log-count">0</span><small>VISIBLE EVENTS</small></div></div>
+        <article class="panel-card overflow-hidden p-0"><form id="audit-search-form" class="audit-toolbar"><div class="search-shell flex-1"><span>⌕</span><input id="audit-query" type="search" placeholder="Search claim ID, actor, or event details"><select id="audit-action"><option value="">All actions</option><option>SCRAPED</option><option>ANALYZED</option><option>CLAIM_RESUBMITTED</option><option>RESOLVED</option><option>EXPORTED</option></select></div><button class="button-secondary" type="submit">Apply filter</button></form><div class="scrollbar-subtle overflow-auto"><table class="enterprise-table min-w-[900px]"><thead><tr><th>Timestamp</th><th>Claim</th><th>Action</th><th>Performed by</th><th>Compliance detail</th></tr></thead><tbody id="global-audit-body"></tbody></table><div id="global-audit-empty" hidden class="empty-state"><strong>No matching compliance events</strong></div></div></article>
+      </section>
+    </main>
+  </div>
+
+  <div id="policy-overlay" hidden class="modal-overlay" aria-hidden="true"></div>
+  <aside id="policy-drawer" hidden class="drawer" role="dialog" aria-modal="true" aria-labelledby="policy-title"><div class="flex h-full flex-col"><header><div><p class="eyebrow text-cyan-300">RETRIEVED POLICY EVIDENCE</p><h2 id="policy-title">Policy Citation</h2><p id="policy-claim-id"></p></div><button id="policy-close-button" class="icon-button" type="button" aria-label="Close policy citation">×</button></header><div class="scrollbar-subtle flex-1 overflow-auto p-6"><div class="citation-accent"></div><blockquote id="policy-citation-text"></blockquote></div><footer>Retrieved from ChromaDB · Verify controlling plan terms before submission.</footer></div></aside>
+  <div id="edi-modal" hidden class="modal-overlay grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="edi-title"><section class="code-modal"><header><div><p class="eyebrow text-emerald-300">837P / CMS-1500 READY</p><h2 id="edi-title">Clearinghouse Payload Inspector</h2></div><button id="edi-close-button" class="icon-button" type="button" aria-label="Close payload inspector">×</button></header><div class="code-toolbar"><span id="edi-filename"></span><button id="copy-payload-button" class="button-secondary" type="button">Copy payload</button></div><pre class="scrollbar-subtle"><code id="edi-code"></code></pre></section></div>
+  <div id="integration-console-overlay" hidden class="modal-overlay" aria-hidden="true"></div>
+  <aside id="integration-console-drawer" hidden class="drawer console-drawer" role="dialog" aria-modal="true" aria-labelledby="integration-console-title"><div class="flex h-full flex-col"><header><div><p class="eyebrow text-emerald-300">LIVE EVENT STREAM</p><h2 id="integration-console-title">Integration Console</h2><p>Four-payer connectivity telemetry</p></div><button id="integration-console-close-button" class="icon-button" type="button" aria-label="Close integration console">×</button></header><div class="console-drawer-status"><span class="status-pill status-resolved">SYNCED</span><span>Events stream locally for prototype validation</span></div><pre id="integration-console" class="scrollbar-subtle flex-1"></pre></div></aside>
+  <div id="toast" hidden class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
